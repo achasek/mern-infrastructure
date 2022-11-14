@@ -1,5 +1,6 @@
 // Rewrite the SignUpForm as a function component
 import { useState } from 'react'
+import { signUp } from '../../utilities/users-service'
 
 export default function SignUpForm() {
     const [formData, setFormData] = useState({
@@ -19,9 +20,21 @@ export default function SignUpForm() {
         })
     }
 
-    function handleSubmit(evt) {
+    async function handleSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(formData))
+        try {
+            const formDataCopy = {...formData}
+            delete formDataCopy.error
+            delete formDataCopy.confirm
+            const user = await signUp(formDataCopy)
+            console.log(user)
+        } catch {
+            setFormData({
+                ...formData,
+                error: 'Sign Up Failed - Try Again'
+            })
+        }
+
     }
 
     return(
