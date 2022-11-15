@@ -33,3 +33,7 @@ export function getUser() {
 export function logOut() {
     localStorage.removeItem('token')
 }
+
+export function checkToken() {
+    return usersAPI.checkToken().then(dateStr => new Date(dateStr))
+}
