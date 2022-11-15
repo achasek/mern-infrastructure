@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { signUp } from '../../utilities/users-service'
 
-export default function SignUpForm() {
+export default function SignUpForm({ setUser }) {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -27,14 +27,13 @@ export default function SignUpForm() {
             delete formDataCopy.error
             delete formDataCopy.confirm
             const user = await signUp(formDataCopy)
-            console.log(user)
+            setUser(user)
         } catch {
             setFormData({
                 ...formData,
                 error: 'Sign Up Failed - Try Again'
             })
         }
-
     }
 
     return(
